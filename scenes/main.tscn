@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://d2e0xllp6hrtq"]
 
 [ext_resource type="Texture2D" uid="uid://d4i4uscrnb1ab" path="res://assets/bg/Cowboy-bg.png" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://d1dnhp7qphafm" path="res://scenes/enemy.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://o574kovqis7r" path="res://scenes/player.tscn" id="3_sugp2"]
 
 [node name="main" type="Node2D" unique_id=1753901930]
 
@@ -8,3 +10,11 @@
 position = Vector2(575.4681, 324)
 scale = Vector2(2.2978723, 2.2978723)
 texture = ExtResource("1_o5qli")
+
+[node name="Enemy" parent="." unique_id=1163984074 instance=ExtResource("2_0wfyh")]
+position = Vector2(1021, 583)
+scale = Vector2(0.5, 0.5)
+
+[node name="Player" parent="." unique_id=202460842 instance=ExtResource("3_sugp2")]
+position = Vector2(124, 583)
+scale = Vector2(0.5, 0.5)
