@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://d2e0xllp6hrtq"]
+
+[ext_resource type="Texture2D" uid="uid://d4i4uscrnb1ab" path="res://assets/bg/Cowboy-bg.png" id="1_o5qli"]
+
+[node name="main" type="Node2D" unique_id=1753901930]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1324976396]
+position = Vector2(575.4681, 324)
+scale = Vector2(2.2978723, 2.2978723)
+texture = ExtResource("1_o5qli")
