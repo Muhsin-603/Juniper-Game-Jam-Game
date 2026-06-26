@@ -28,7 +28,9 @@ func _process(delta: float) -> void:
 func lock_and_start_showdown() -> void:
 	if current_phase == Phase.SHOWDOWN:
 		return
-		
+	
+	generate_ai_dodges()
+	
 	current_phase = Phase.SHOWDOWN
 	phase_changed.emit(current_phase)
 	
@@ -53,3 +55,15 @@ func reset_selection_phase() -> void:
 	selection_timer = SELECTION_TIME_LIMIT
 	current_phase = Phase.SELECTION
 	phase_changed.emit(current_phase)
+
+func generate_ai_dodges() -> void:
+	enemy_queue.clear()
+	var choices: Array[String] = ["stay", "jump", "double_jump"]
+	
+	for i in range(3):
+		var random_index: int = randi() % choices.size()
+		enemy_queue.append(choices[random_index])
+		
+	print("--- LOCK IN COMPLETE ---")
+	print("Player Attack Queue: ", player_queue)
+	print("Enemy Dodge Queue  : ", enemy_queue)
