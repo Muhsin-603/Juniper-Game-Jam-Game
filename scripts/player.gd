@@ -1,25 +1,38 @@
 extends CharacterBody2D
 
+var pending_jump_state: int = 0
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+func _process(_delta: float) -> void:
+
+	if TurnManager.current_phase != TurnManager.Phase.SELECTION:
+		return
+		
+
+	if TurnManager.player_queue.size() >= 3:
+		return
 
 
-func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+	if Input.is_action_just_pressed("jump_action"):
+		pending_jump_state += 1
+		if pending_jump_state > 2:
+			pending_jump_state = 2
+		print("Jump level modifier set to: ", pending_jump_state)
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+	elif Input.is_action_just_pressed("shoot"):
+		var chosen_shot: String = "low"
+		
+		if pending_jump_state == 1:
+			chosen_shot = "mid"
+		elif pending_jump_state == 2:
+			chosen_shot = "high"
+			
+		TurnManager.player_queue.append(chosen_shot)
+		print("Shot locked in: ", chosen_shot, " Current Queue: ", TurnManager.player_queue)
+		
 
-	move_and_slide()
+		pending_jump_state = 0
+		
+		if TurnManager.player_queue.size() == 3:
+			print("All 3 moves loaded! Readying showdown sequence...")
+			TurnManager.lock_and_start_showdown()
